@@ -1,34 +1,31 @@
-import { ctx, player, clearSize, collisions, ms, void1 } from './globals';
+import { ctx, reset, player, clearSize, collisions, ms, void1 } from './globals';
 import { playerImage, voidImage } from './images';
-//Top defining
-let startTime = null;
+
+//Top level defining
+let startTime : number;
 
 //Draws player with an eraser so every time it is ran it erases the previous instance.
-const drawPlayer = () => {
-	ctx.clearRect(
+const drawPlayer : Function = () => {
+	ctx.clearRect (
 		player.x - clearSize.offset,
 		player.y - clearSize.offset,
 		clearSize.size,
 		clearSize.size
 	);
-	ctx.drawImage(
+	ctx.drawImage (
 		player.image,
 		player.x,
 		player.y,
 		player.size,
 		player.size
 	);
-};
-
-const resetPlayer = () => {
-		player.x = 0;
-		player.y = 0;
 }
 
 //Draws the main image being erased by player.
-const drawVoid = () => {
-	resetPlayer(); //Resets players position whenever drawVoid is called.
-	ctx.drawImage(
+const drawVoid : Function = () => {
+	player.x = reset; // Reset player location
+	player.y = reset;
+	ctx.drawImage (
 		void1.image,
 		void1.x,
 		void1.y,
@@ -38,77 +35,76 @@ const drawVoid = () => {
 }
 
 //Keyboard done by wasd (Code just returns if a key is not doing anything, fixes a bug I found.)
-const playerKeyboard = (elapsed: number) => {
-	let vel = (100 * elapsed) / ms;
-	window.addEventListener(
-		'keydown',
-		(event) => {
-			if (event.key === 'd') {
-				player.vy = 0;
+const playerKeyboard : Function = ( elapsed : number ) => {
+	const vel : number = (100 * elapsed) / ms;
+	window.addEventListener ( 'keydown', (event) => {
+			if ( event.key === 'd' ) {
+				player.vy = reset;
 				player.vx += vel;
-			};
-			if (event.key === 'a') {
-				player.vy = 0;
+			}
+			if ( event.key === 'a' ) {
+				player.vy = reset;
 				player.vx -= vel;
-			};
-			if (event.key === 'w') {
-				player.vx = 0;
+			}
+			if ( event.key === 'w' ) {
+				player.vx = reset;
 				player.vy -= vel;
-			};
-			if (event.key === 's') {
-				player.vx = 0;
+			}
+			if ( event.key === 's' ) {
+				player.vx = reset;
 				player.vy += vel;
-			};
-			if (event.key != 'd','a','w','s') {
-					return
-			};
-		}
-	);
+			}
+			if ( event.key != 'd','a','w','s' ) {
+					return;
+			}
+		} );
 }
 
 //Caps player movement to 400 x and y (Done a little lazily but w/e).
-const playerCap = () => {
-	const cap = 400;
-	if (player.vx > cap) {
+const playerCap : Function = () => {
+	const cap : number = 400;
+	if ( player.vx > cap ) {
 		player.vx = cap;
 	}
-	if (player.vx < -cap) {
+	if ( player.vx < -cap ) {
 		player.vx = -cap;
 	}
-	if (player.vy > cap) {
+	if ( player.vy > cap ) {
 		player.vy = cap;
 	}
-	if (player.vy < -cap) {
+	if ( player.vy < -cap ) {
 		player.vy = -cap;
 	}
 }
 
 //Collisions, works good enough.
-const playerCollisons = () => {
-	if (player.y > collisions.bottom * .95) {
-		player.y = collisions.bottom * .95;
-		player.vy = 0;
-		player.vx = 0;
+const playerCollisons : Function = () => {
+	const bottommod : number = 0.95
+	const rightmod : number = 0.97
+	if ( player.y > collisions.bottom * bottommod ) {
+		player.y = collisions.bottom * bottommod;
+		player.vy = reset;
+		player.vx = reset;
 	}
-	if (player.x < collisions.left) {
+	if ( player.x < collisions.left ) {
 		player.x = collisions.left;
-		player.vy = 0;
-		player.vx = 0;
+		player.vy = reset;
+		player.vx = reset;
 	}
-	if (player.x > collisions.right * .97) {
-		player.x = collisions.right * .97;
-		player.vy = 0;
-		player.vx = 0;
+	if ( player.x > collisions.right * rightmod ) {
+		player.x = collisions.right * rightmod;
+		player.vy = reset;
+		player.vx = reset;
 	}
-	if (player.y < collisions.top) {
+	if ( player.y < collisions.top ) {
 		player.y = collisions.top;
-		player.vy = 0;
-		player.vx = 0;
+		player.vy = reset;
+		player.vx = reset;
 	}
 }
 
 //Updates player movement
-const updatePlayer = (elapsed: number) => {
+const updatePlayer : Function = ( elapsed : number ) => {
 	playerKeyboard(elapsed);
 	playerCap();
 	playerCollisons();
@@ -116,36 +112,36 @@ const updatePlayer = (elapsed: number) => {
 	player.x = Math.round(player.x);
 	player.y += (player.vy * elapsed) / ms;
 	player.y = Math.round(player.y);
-};
+}
 
 //Handles animating the player
-const animatePlayer = (timestamp: number = 0) => {
-	let elapsed: number
-	if (timestamp) {
-		if (!startTime) {
+const animatePlayer = ( timestamp : number = reset ) => {
+	let elapsed : number;
+	if ( timestamp ) {
+		if ( !startTime ) {
 			startTime = timestamp;
-			elapsed = 0;
+			elapsed = reset;
 		}
 		else {
 			elapsed = timestamp - startTime;
 			startTime = timestamp;
 		}
-		updatePlayer(elapsed);
+		updatePlayer ( elapsed );
 	}
-	drawPlayer();
-	requestAnimationFrame(animatePlayer);
-};
-
-//Stuff done on load, handles player animation and reloading the void.
-const onLoad = () => {
-	const delay = 120000;
-	playerImage.addEventListener("load", () => {
-		animatePlayer();
-	});
-	voidImage.addEventListener("load", () => {
-		drawVoid();
-		setInterval(drawVoid, delay);
-	});
+	drawPlayer ();
+	requestAnimationFrame ( animatePlayer );
 }
 
-onLoad();
+//Stuff done on load, handles player animation and reloading the void.
+const onLoad : Function = () => {
+	const delay : number = 120000;
+	playerImage.addEventListener ( "load", () => {
+		animatePlayer ();
+	} );
+	voidImage.addEventListener ( "load", () => {
+		drawVoid ();
+		setInterval (drawVoid, delay);
+	} );
+}
+
+onLoad ();
