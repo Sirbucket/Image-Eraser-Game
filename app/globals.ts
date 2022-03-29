@@ -5,14 +5,14 @@ import {
 from './images';
 
 //Top level defining
-export const canvas : HTMLCanvasElement = document.createElement ( 'canvas' );
-export const ctx : CanvasRenderingContext2D = canvas.getContext ( '2d' );
+export const canvas : HTMLCanvasElement = document.createElement( 'canvas' );
+export const ctx : CanvasRenderingContext2D = canvas.getContext( '2d' );
 export const width : number = 1600;
 export const height : number = 900;
 export const ms : number = 1000;
 export const reset : number = 0;
 
-const app : HTMLDivElement = document.querySelector ( '#app' );
+const app : HTMLDivElement = document.querySelector( '#app' );
 const size : number = 40;
 const style : CSSStyleDeclaration = canvas.style;
 
@@ -55,4 +55,4 @@ canvas.height = height;
 style.width = `${ width }px`;
 style.height = `${ height }px`;
 
-app.appendChild(canvas);
+app.appendChild( canvas );

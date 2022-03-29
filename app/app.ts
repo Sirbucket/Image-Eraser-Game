@@ -20,13 +20,13 @@ let startTime : number;
 
 //Draws player with an eraser so every time it is ran it erases the previous instance.
 const drawPlayer = () => {
-	ctx.clearRect (
+	ctx.clearRect(
 		player.x - clearSize.offset,
 		player.y - clearSize.offset,
 		clearSize.size,
 		clearSize.size
 	);
-	ctx.drawImage (
+	ctx.drawImage(
 		player.image,
 		player.x,
 		player.y,
@@ -40,7 +40,7 @@ const drawspace = () => {
 	player.x = reset; // Reset player location
 	player.y = reset;
 
-	ctx.drawImage (
+	ctx.drawImage(
 		space.image,
 		space.x,
 		space.y,
@@ -132,9 +132,9 @@ const playerCollisons = () => {
 
 //Updates player movement
 const updatePlayer = ( elapsed : number ) => {
-	playerKeyboard ( elapsed );
-	playerCap ();
-	playerCollisons ();
+	playerKeyboard( elapsed );
+	playerCap();
+	playerCollisons();
 
 	player.x += ( player.vx * elapsed ) / ms;
 	player.x = Math.round ( player.x );
@@ -155,23 +155,23 @@ const animatePlayer = ( timestamp : number = reset ) => {
 			elapsed = timestamp - startTime;
 			startTime = timestamp;
 		}
-		updatePlayer ( elapsed );
+		updatePlayer( elapsed );
 	}
 
-	drawPlayer ();
-	requestAnimationFrame ( animatePlayer );
+	drawPlayer();
+	requestAnimationFrame( animatePlayer );
 }
 
 //Stuff done on load, handles player animation and reloading the space.
 const onLoad = () => {
-	const delay : number = 120000;
 	playerImage.addEventListener ( "load", () => {
-		animatePlayer ();
+		animatePlayer();
 	} );
 	spaceImage.addEventListener ( "load", () => {
-		drawspace ();
-		setInterval ( drawspace, delay );
+		const delay : number = 120000;
+		drawspace();
+		setInterval( drawspace, delay );
 	} );
 }
 
-onLoad ();
+onLoad(); //Call onLoad and run game.
