@@ -1,21 +1,20 @@
 import playerUrl from './assets/target-min.png';
-import void1Url from './assets/blackvoid1-min.jpeg';
-import void2Url from './assets/blackvoid2-min.jpeg';
+import space1Url from './assets/blackspace1-min.jpeg';
+import space2Url from './assets/blackspace2-min.jpeg';
 
-const assetDiv: HTMLDivElement = document.querySelector('#assets');
+const assetDiv : HTMLDivElement = document.querySelector ( '#assets' );
 
 //Player image
-export const playerImage : HTMLImageElement = document.createElement('img');
+export const playerImage : HTMLImageElement = document.createElement ( 'img' );
 playerImage.src = playerUrl;
-assetDiv.appendChild(playerImage);
+assetDiv.appendChild ( playerImage );
 
 //Erased image
-export const voidImage : HTMLImageElement = document.createElement('img');
-voidImage.src = void1Url;
-assetDiv.appendChild(voidImage);
+export const spaceImage : HTMLImageElement = document.createElement ( 'img' );
+spaceImage.src = space1Url;
+assetDiv.appendChild ( spaceImage );
 
 //Background image
-
-document.querySelector('body').style = `--current-image : url("${void2Url}")`;
+document.querySelector ( 'body' ).style = `--current-image : url( "${ space2Url }" )`;
 
 assetDiv.style.display = 'none'; // hide the images
