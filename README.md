@@ -1,0 +1,1 @@
+A small demo game that erases parts of an image, the goal is to erase the whole image within the 2 minute timer.
