@@ -15,10 +15,10 @@ import {
 }
 	from './images';
 
-//Top level defining.
+// Top level defining.
 let startTime: number;
 
-//Draws player with an eraser so every time it is ran it erases the previous instance.
+// Draws player with an eraser so every time it is ran it erases the previous instance.
 const drawPlayer = () => {
 	ctx.clearRect(
 		player.x - clearSize.offset,
@@ -35,10 +35,12 @@ const drawPlayer = () => {
 	);
 }
 
-//Draws the main image being erased by player.
+// Draws the main image being erased by player.
 const drawspace = () => {
 	player.x = reset; // Reset player location
 	player.y = reset;
+	player.vx = reset; // Stop accelerating when reloaded
+	player.vy = reset;
 
 	ctx.drawImage(
 		space.image,
@@ -49,7 +51,7 @@ const drawspace = () => {
 	);
 }
 
-//Keyboard done by wasd (Code just returns if a key is not doing anything, fixes a bug I found.)
+// Keyboard done by wasd (Code just returns if a key is not doing anything, fixes a bug I found.)
 const playerKeyboard = (elapsed: number) => {
 	const vel: number = (100 * elapsed) / ms;
 	window.addEventListener('keydown', (event) => {
@@ -79,7 +81,7 @@ const playerKeyboard = (elapsed: number) => {
 	});
 }
 
-//Caps player movement to 400 x and y (Done a little lazily but w/e).
+// Caps player movement to 400 x and y (Done a little lazily but w/e).
 const playerCap = () => {
 	const cap: number = 400;
 
@@ -100,7 +102,7 @@ const playerCap = () => {
 	}
 }
 
-//Collisions, works good enough.
+// Collisions, works good enough.
 const playerCollisons = () => {
 	const bottommod: number = 0.95;
 	const rightmod: number = 0.97;
@@ -130,7 +132,7 @@ const playerCollisons = () => {
 	}
 }
 
-//Updates player movement
+// Updates player movement
 const updatePlayer = (elapsed: number) => {
 	playerKeyboard(elapsed);
 	playerCap();
@@ -142,7 +144,7 @@ const updatePlayer = (elapsed: number) => {
 	player.y = Math.round(player.y);
 }
 
-//Handles animating the player
+// Handles animating the player
 const animatePlayer = (timestamp: number = reset) => {
 	let elapsed: number;
 
@@ -162,7 +164,7 @@ const animatePlayer = (timestamp: number = reset) => {
 	requestAnimationFrame(animatePlayer);
 }
 
-//Stuff done on load, handles player animation and reloading the space.
+// Stuff done on load, handles player animation and reloading the space.
 const onLoad = () => {
 	playerImage.addEventListener("load", () => {
 		animatePlayer();
@@ -174,4 +176,4 @@ const onLoad = () => {
 	});
 }
 
-onLoad(); //Call onLoad and run game.
+onLoad(); // Call onLoad and run game.

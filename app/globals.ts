@@ -26,7 +26,7 @@ export const player = {
 	image: playerImage
 }
 
-//The image you delete
+// The image you delete
 export const space = {
 	sizex: width,
 	sizey: height,
@@ -35,13 +35,13 @@ export const space = {
 	image: spaceImage
 }
 
-//Size of the eraser box
+// Size of the eraser box
 export const clearSize = {
 	offset: size / 2, //Should be 1/4th of clearSize size.
 	size: size * 2
 }
 
-//Defining the base of where the player collides
+// Defining the base of where the player collides
 export const collisions = {
 	bottom: height,
 	left: reset,
@@ -49,7 +49,7 @@ export const collisions = {
 	top: reset
 }
 
-//Canvas width and height
+// Canvas width and height
 canvas.width = width;
 canvas.height = height;
 style.width = `${width}px`;
